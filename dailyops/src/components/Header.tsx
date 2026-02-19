@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SearchCommand from "@/components/SearchCommand";
 
 export default function Header() {
   return (
@@ -26,14 +27,7 @@ export default function Header() {
 
         {/* Search */}
         <div className="flex items-center gap-3">
-          <Link
-            href="/search"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[#1b2a60] text-sm text-gray-200 hover:border-[#2BD9C5] hover:text-white transition"
-            aria-label="Search"
-          >
-            <span className="text-[#2BD9C5]">⌕</span>
-            Search
-          </Link>
+          <SearchCommand />
         </div>
 
       </div>
