@@ -15,6 +15,11 @@ export default function Header() {
           </span>
         </Link>
 
+        <Link href="/about" className="hover:text-[#2BD9C5] transition">
+            About
+        </Link>
+
+
         {/* Navigation */}
         <nav className="hidden md:flex gap-8 text-sm font-medium">
           <Link href="/networking" className="hover:text-[#2BD9C5] transition">
