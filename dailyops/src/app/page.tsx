@@ -88,7 +88,7 @@ export default function Home() {
             className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
-            S'inscrire
+            S&apos;inscrire
           </button>
         </div>
       </section>
