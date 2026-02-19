@@ -3,95 +3,79 @@ import ArticleCard from "@/components/ArticleCard";
 
 export default function Home() {
   return (
-    <div className="space-y-12">
-      {/* Hero / Introduction */}
-      <section className="text-center py-8">
-        <h1 className="text-4xl font-bold mb-4">Real-world Ops & Troubleshooting Notes</h1>
-        <p className="text-xl text-gray-600">– Learn, Apply, Repeat –</p>
-        <a href="#" className="inline-block mt-4 text-blue-600 hover:underline">
-          Explorer les sections →
-        </a>
+    <div className="flex flex-col">
+
+      {/* HERO */}
+      <section className="text-center py-28 px-6 bg-linear-to-b from-[#0A1128] to-[#111C44]">
+        <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight">
+          Real-World Ops & Troubleshooting
+        </h1>
+        <p className="mt-6 text-xl text-gray-400">
+          Concepts, baselines et incidents réels pour ingénieurs réseau & infra
+        </p>
+        <button className="mt-8 bg-[#2BD9C5] text-black font-semibold px-8 py-3 rounded-lg hover:opacity-90 transition">
+          Explorer les sections
+        </button>
       </section>
 
-      {/* Catégories principales (4 cards) */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <CategoryCard 
-          title="NETWORKING"
-          description="Baselines, routing, VLAN, VPN – tous les concepts clés"
-          color="blue"
-        />
-        <CategoryCard 
-          title="CYBERSECURITY"
-          description="Hardening, segmentation, firewalls – sécurité terrain expliquée"
-          color="green"
-        />
-        <CategoryCard 
-          title="INFRASTRUCTURE"
-          description="Virtualization, HA, storage-bonnes pratiques d'infra"
-          color="purple"
-        />
-        <CategoryCard 
-          title="TROUBLESHOOTING"
-          description="Incidents réels et méthodologie DailyOps"
-          color="orange"
-        />
-      </section>
+      {/* CONTENU */}
+      <div className="container mx-auto px-6 py-20 space-y-20">
 
-      {/* Dernières Publications */}
-      <section>
-        <h2 className="text-2xl font-bold mb-4">Dernières Publications</h2>
-        
-        {/* Tags */}
-        <div className="flex flex-wrap gap-2 mb-6">
-          {["BEST PRACTICE", "INCIDENT", "BASELINE", "TROUBLESHOOTING", "ROUTING"].map(tag => (
-            <span key={tag} className="bg-gray-200 px-3 py-1 rounded-full text-sm font-medium">
-              {tag}
-            </span>
-          ))}
-        </div>
+        {/* CATÉGORIES */}
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <CategoryCard 
+            title="Networking"
+            description="Baselines, routing, VLAN, VPN" color={"blue"}          />
+          <CategoryCard 
+            title="Cybersecurity"
+            description="Hardening, segmentation, firewall hygiene" color={"blue"}          />
+          <CategoryCard 
+            title="Infrastructure"
+            description="Virtualisation, HA, storage" color={"blue"}          />
+          <CategoryCard 
+            title="Troubleshooting"
+            description="Incidents réels et méthodologie DailyOps" color={"blue"}          />
+        </section>
 
-        {/* Articles */}
-        <div className="space-y-4">
-          <ArticleCard 
-            title="Production-Ready Switch Baseline – What Always Should Be Configured"
-            category="BEST PRACTICE"
-          />
-          <ArticleCard 
-            title="Firewall Rulebase Hygiene – The Silent Production Killer"
-            category="CYBERSECURITY"
-          />
-          <ArticleCard 
-            title="Virtualization in Production – Common analysis"
-            category="INFRASTRUCTURE"
-          />
-        </div>
-      </section>
+        {/* DERNIERS ARTICLES */}
+        <section>
+          <h2 className="text-3xl font-bold mb-8">Derniers Articles</h2>
+          <div className="space-y-6">
+            <ArticleCard 
+              title="Production-Ready Switch Baseline"
+              category="Networking"
+            />
+            <ArticleCard 
+              title="Firewall Rulebase Hygiene"
+              category="Cybersecurity"
+            />
+            <ArticleCard 
+              title="Virtualization in Production"
+              category="Infrastructure"
+            />
+          </div>
+        </section>
 
-      {/* Publications populaires */}
-      <section>
-        <h2 className="text-xl font-bold mb-3">Publications populaires</h2>
-        <ul className="list-disc pl-5 space-y-1 text-blue-600">
-          <li><a href="#" className="hover:underline">Firewall Rulebase Hygiene – The Silent Production Killer</a></li>
-          <li><a href="#" className="hover:underline">Virtualization in Production – Common Misconfigurations</a></li>
-          <li><a href="#" className="hover:underline">Fixing IPSec VPN Phase 1 Failure – Key Insights</a></li>
-        </ul>
-      </section>
+      </div>
 
-      {/* Newsletter */}
-      <section className="bg-gray-100 p-6 rounded-lg">
-        <h3 className="text-lg font-bold mb-2">Recevoir les bonnes pratiques DailyOps</h3>
-        <p className="mb-4">Rejoins notre newsletter et reste informé(e) des dernières tips experts.</p>
-        <div className="flex flex-col sm:flex-row gap-2">
+      {/* NEWSLETTER */}
+      <section className="bg-[#111C44] py-16 px-6 text-center">
+        <h3 className="text-2xl font-bold">Recevoir les bonnes pratiques DailyOps</h3>
+        <p className="mt-4 text-gray-400">
+          Des analyses terrain directement dans votre boîte mail.
+        </p>
+        <div className="mt-6 flex flex-col sm:flex-row justify-center gap-4 max-w-xl mx-auto">
           <input 
             type="email" 
             placeholder="Votre email..." 
-            className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="flex-1 px-4 py-3 rounded-lg bg-[#0A1128] border border-gray-600 focus:outline-none focus:border-[#2BD9C5]"
           />
-          <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+          <button className="bg-[#2BD9C5] text-black px-6 py-3 rounded-lg font-semibold hover:opacity-90">
             S&apos;inscrire
           </button>
         </div>
       </section>
+
     </div>
   );
 }
