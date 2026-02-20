@@ -1,3 +1,4 @@
+import SectionHero from "@/components/SectionHero";
 import Link from "next/link";
 import ArticleCard from "@/components/ArticleCard";
 
