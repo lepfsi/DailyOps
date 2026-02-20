@@ -100,7 +100,7 @@ export default function Home() {
             <div>
               <h2 className="text-3xl font-bold text-white">Derniers articles</h2>
               <p className="mt-2 text-gray-400">
-                Des titres placeholder pour l’instant — on branchera sur les vrais posts ensuite.
+                Du terrain, du concret, du reproductible.
               </p>
             </div>
 
@@ -112,37 +112,47 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="space-y-6">
-            <ArticleCard title="Production-Ready Switch Baseline" category="Networking" />
-            <ArticleCard title="Firewall Rulebase Hygiene" category="Cybersecurity" />
-            <ArticleCard title="Virtualization in Production" category="Infrastructure" />
-          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            {/* Featured */}
+            <div className="lg:col-span-7">
+              <ArticleCard
+                variant="featured"
+                title="Production-Ready Switch Baseline — What Always Should Be Configured"
+                category="Networking"
+                href="#"
+                excerpt="Une checklist orientée production : management plane, L2 hygiene, STP, trunks, AAA, logs, SNMP, sauvegardes."
+                readTime="8 min"
+                date="Today"
+              />
+            </div>
 
-          {/* Small CTA row */}
-          <div className="flex flex-col md:flex-row gap-4">
-            <Link
-              href="/troubleshooting"
-              className="flex-1 rounded-2xl border border-[#1b2a60] bg-[#0A1128]/40 p-6 hover:border-[#2BD9C5]/60 transition"
-            >
-              <p className="text-sm text-gray-400">Format</p>
-              <p className="mt-1 font-semibold text-white">DailyOps RCA</p>
-              <p className="mt-2 text-sm text-gray-300">
-                Contexte → Symptôme → Analyse → Root cause → Fix → Leçon.
-              </p>
-              <p className="mt-4 text-sm text-[#2BD9C5]">Découvrir →</p>
-            </Link>
-
-            <Link
-              href="/networking"
-              className="flex-1 rounded-2xl border border-[#1b2a60] bg-[#0A1128]/40 p-6 hover:border-[#2BD9C5]/60 transition"
-            >
-              <p className="text-sm text-gray-400">Objectif</p>
-              <p className="mt-1 font-semibold text-white">Baselines prêtes pour la prod</p>
-              <p className="mt-2 text-sm text-gray-300">
-                Des checklists et templates transverses, indépendants des marques.
-              </p>
-              <p className="mt-4 text-sm text-[#2BD9C5]">Explorer →</p>
-            </Link>
+            {/* Others */}
+            <div className="lg:col-span-5 space-y-4">
+              <ArticleCard
+                title="Firewall Rulebase Hygiene — The Silent Production Killer"
+                category="Cybersecurity"
+                href="#"
+                excerpt="Méthode de nettoyage : objets, shadow rules, naming, review, lifecycle."
+                readTime="6 min"
+                date="Today"
+              />
+              <ArticleCard
+                title="Virtualization in Production — Common Misconfigurations"
+                category="Infrastructure"
+                href="#"
+                excerpt="Snapshots, storage latency, HA assumptions, backup illusions."
+                readTime="7 min"
+                date="Recent"
+              />
+              <ArticleCard
+                title="Fixing IPSec Phase 1 Failure — A Practical Checklist"
+                category="Troubleshooting"
+                href="#"
+                excerpt="IKE params, proposals, ID mismatch, NAT-T, logs, captures."
+                readTime="5 min"
+                date="Recent"
+              />
+            </div>
           </div>
         </section>
       </div>
