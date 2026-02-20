@@ -8,6 +8,55 @@ export default function Footer() {
       {/* top accent */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#2BD9C5]/60 to-transparent" />
 
+      {/* Newsletter CTA integrated */}
+      <div className="container mx-auto px-6 pt-14">
+        <div className="relative overflow-hidden rounded-2xl border border-[#1b2a60] bg-[#0A1128]/40 backdrop-blur p-8">
+          {/* glow */}
+          <div className="pointer-events-none absolute -inset-24 opacity-70">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(43,217,197,0.18),transparent_55%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_40%,rgba(43,217,197,0.10),transparent_60%)]" />
+          </div>
+
+          <div className="relative flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+            <div className="space-y-2">
+              <p className="text-sm text-gray-300">
+                Newsletter
+              </p>
+              <h3 className="text-2xl font-extrabold text-white tracking-tight">
+                Recevoir les bonnes pratiques DailyOps
+              </h3>
+              <p className="text-sm text-gray-300 max-w-2xl">
+                Une dose courte et utile : baselines, hardening, RCA, et erreurs classiques en prod. Pas de spam.
+              </p>
+            </div>
+
+            <form className="w-full lg:w-auto flex flex-col sm:flex-row gap-3">
+              <input
+                type="email"
+                placeholder="Votre email..."
+                className="w-full sm:w-[360px] px-4 py-3 rounded-xl bg-[#0A1128] border border-[#1b2a60] focus:outline-none focus:border-[#2BD9C5] text-gray-100"
+              />
+              <button
+                type="button"
+                className="px-6 py-3 rounded-xl bg-[#2BD9C5] text-black font-semibold hover:opacity-90 transition"
+              >
+                S&apos;inscrire
+              </button>
+            </form>
+          </div>
+
+          <div className="relative mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+            <p className="text-xs text-gray-500">
+              Prochainement : archive + tags + recherche globale.
+            </p>
+            <p className="text-xs text-gray-500">
+              Contact direct : <a className="text-[#2BD9C5] hover:opacity-90" href="mailto:contact@dailyops.tech">contact@dailyops.tech</a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer main */}
       <div className="container mx-auto px-6 py-14">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
           {/* Brand */}
@@ -50,7 +99,26 @@ export default function Footer() {
 
           {/* Contact / Social */}
           <div className="md:col-span-3 space-y-4">
-            <p className="text-sm font-semibold text-white">Contact</p>
+            <p className="text-sm font-semibold text-white">Suivre</p>
+
+            <div className="flex items-center gap-3">
+              <a
+                href="#"
+                className="inline-flex items-center justify-center w-10 h-10 rounded-xl border border-[#1b2a60] bg-[#0A1128]/40 text-gray-200 hover:border-[#2BD9C5]/60 hover:text-white transition"
+                aria-label="LinkedIn"
+                title="LinkedIn"
+              >
+                in
+              </a>
+              <a
+                href="#"
+                className="inline-flex items-center justify-center w-10 h-10 rounded-xl border border-[#1b2a60] bg-[#0A1128]/40 text-gray-200 hover:border-[#2BD9C5]/60 hover:text-white transition"
+                aria-label="X"
+                title="X"
+              >
+                x
+              </a>
+            </div>
 
             <a
               href="mailto:contact@dailyops.tech"
@@ -62,27 +130,6 @@ export default function Footer() {
               </div>
               <span className="text-[#2BD9C5] group-hover:translate-x-0.5 transition">→</span>
             </a>
-
-            <div className="flex items-center gap-3">
-              {/* LinkedIn */}
-              <a
-                href="#"
-                className="inline-flex items-center justify-center w-10 h-10 rounded-xl border border-[#1b2a60] bg-[#0A1128]/40 text-gray-200 hover:border-[#2BD9C5]/60 hover:text-white transition"
-                aria-label="LinkedIn"
-                title="LinkedIn"
-              >
-                in
-              </a>
-              {/* X */}
-              <a
-                href="#"
-                className="inline-flex items-center justify-center w-10 h-10 rounded-xl border border-[#1b2a60] bg-[#0A1128]/40 text-gray-200 hover:border-[#2BD9C5]/60 hover:text-white transition"
-                aria-label="X"
-                title="X"
-              >
-                x
-              </a>
-            </div>
 
             <p className="text-xs text-gray-500">
               Les liens sociaux seront branchés dès que les profils sont prêts.

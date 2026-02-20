@@ -156,37 +156,6 @@ export default function Home() {
           </div>
         </section>
       </div>
-
-      {/* NEWSLETTER */}
-      <section className="relative overflow-hidden bg-[#111C44] py-16 px-6 text-center">
-        <div className="pointer-events-none absolute inset-0 opacity-30">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(43,217,197,0.18),transparent_55%)]" />
-        </div>
-
-        <div className="relative mx-auto max-w-2xl">
-          <h3 className="text-2xl font-bold text-white">
-            Recevoir les bonnes pratiques DailyOps
-          </h3>
-          <p className="mt-4 text-gray-300">
-            Une dose courte, utile, orientée terrain. Pas de spam.
-          </p>
-
-          <div className="mt-6 flex flex-col sm:flex-row justify-center gap-4">
-            <input
-              type="email"
-              placeholder="Votre email..."
-              className="flex-1 px-4 py-3 rounded-lg bg-[#0A1128] border border-[#1b2a60] focus:outline-none focus:border-[#2BD9C5] text-gray-100"
-            />
-            <button className="bg-[#2BD9C5] text-black px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition">
-              S&apos;inscrire
-            </button>
-          </div>
-
-          <p className="mt-3 text-xs text-gray-400">
-            Prochainement : archive + tags + recherche globale.
-          </p>
-        </div>
-      </section>
     </div>
   );
 }
