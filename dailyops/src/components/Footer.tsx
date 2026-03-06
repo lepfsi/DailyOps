@@ -1,4 +1,5 @@
 import Link from "next/link";
+import NewsletterForm from "@/components/NewsletterForm";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -30,19 +31,8 @@ export default function Footer() {
               </p>
             </div>
 
-            <form className="w-full lg:w-auto flex flex-col sm:flex-row gap-3">
-              <input
-                type="email"
-                placeholder="Votre email..."
-                className="w-full sm:w-[360px] px-4 py-3 rounded-xl bg-[#0A1128] border border-[#1b2a60] focus:outline-none focus:border-[#2BD9C5] text-gray-100"
-              />
-              <button
-                type="button"
-                className="px-6 py-3 rounded-xl bg-[#2BD9C5] text-black font-semibold hover:opacity-90 transition"
-              >
-                S&apos;inscrire
-              </button>
-            </form>
+            <NewsletterForm />
+
           </div>
 
           <div className="relative mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
