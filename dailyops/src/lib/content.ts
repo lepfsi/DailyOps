@@ -13,6 +13,16 @@ export type PostMeta = {
 
 const contentRoot = path.join(process.cwd(), "content");
 
+function normalizeDate(value: unknown): string {
+  if (!value) return "";
+
+  if (value instanceof Date) {
+    return value.toISOString().split("T")[0];
+  }
+
+  return String(value);
+}
+
 export function getPostsByCategory(category: string): PostMeta[] {
   const categoryPath = path.join(contentRoot, category);
 
@@ -31,15 +41,17 @@ export function getPostsByCategory(category: string): PostMeta[] {
 
     return {
       title: data.title ?? "Untitled",
-      date: data.date ?? "",
+      date: normalizeDate(data.date),
       category: data.category ?? category,
-      tags: data.tags ?? [],
+      tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
       excerpt: data.excerpt ?? "",
       slug: file.replace(/\.mdx$/, ""),
     };
   });
 
-  return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  return posts.sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
 }
 
 export function getPostBySlug(category: string, slug: string) {
@@ -55,9 +67,9 @@ export function getPostBySlug(category: string, slug: string) {
   return {
     meta: {
       title: data.title ?? "Untitled",
-      date: data.date ?? "",
+      date: normalizeDate(data.date),
       category: data.category ?? category,
-      tags: data.tags ?? [],
+      tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
       excerpt: data.excerpt ?? "",
       slug,
     },
