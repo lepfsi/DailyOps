@@ -6,40 +6,97 @@ tags: [baseline, switching]
 excerpt: Configurations minimales à appliquer sur un switch avant de le mettre en production.
 ---
 
-## Contexte
-
-Dans beaucoup d’infrastructures, les switches sont configurés pour fonctionner, pas pour survivre en production.
-
-## Baseline minimale
-
-- management isolé
-- SSH uniquement
-- NTP configuré
-- logs centralisés
-- STP sécurisé
-
-## Conclusion
-
-Une baseline simple permet d’éviter une grande partie des incidents réseau.---
-title: Production-Ready Switch Baseline
-date: 2026-03-06
-category: networking
-tags: [baseline, switching]
-excerpt: Configurations minimales à appliquer sur un switch avant de le mettre en production.
----
+> ⚡ **Key Takeaways**
+>
+> - Un switch sans baseline devient rapidement difficile à exploiter en production.
+> - Le plan de management doit toujours être isolé du trafic utilisateur.
+> - Logs, NTP et accès sécurisé sont indispensables pour diagnostiquer les incidents.
+> - Une baseline simple réduit énormément le temps de troubleshooting.
 
 ## Contexte
 
-Dans beaucoup d’infrastructures, les switches sont configurés pour fonctionner, pas pour survivre en production.
+Dans beaucoup d’infrastructures, les switches sont configurés pour fonctionner… mais pas pour survivre en production.
+
+Lorsqu’un incident survient — boucle réseau, problème de synchronisation, erreur humaine — l’absence de baseline transforme un simple incident en panne majeure difficile à diagnostiquer.
+
+Une baseline minimale permet de rendre l’équipement **prévisible, observable et administrable**.
 
 ## Baseline minimale
 
-- management isolé
-- SSH uniquement
+Avant toute mise en production, certaines configurations doivent être systématiquement appliquées.
+
+### Management
+
+Le plan de management doit être séparé du trafic utilisateur.
+
+Bonnes pratiques :
+
+- VLAN de management dédié
+- accès SSH uniquement
+- désactivation de Telnet
+- authentification centralisée (AAA si possible)
+
+Objectif : éviter que le plan de contrôle soit exposé inutilement.
+
+### Synchronisation
+
+Les équipements réseau doivent être synchronisés.
+
+Configuration minimale :
+
 - NTP configuré
-- logs centralisés
-- STP sécurisé
+- timezone correcte
+- serveur NTP fiable
+
+Sans synchronisation, les logs deviennent inutilisables lors d’un incident.
+
+### Journalisation
+
+Un switch doit envoyer ses logs vers un système centralisé.
+
+Configuration typique :
+
+- syslog central
+- niveau de log adapté
+- horodatage correct
+
+Cela permet de reconstruire rapidement la chronologie d’un incident.
+
+### Sécurité STP
+
+La majorité des incidents réseau en production viennent de boucles L2.
+
+Protections essentielles :
+
+- BPDU Guard
+- Root Guard
+- PortFast uniquement sur les ports edge
+
+Ces mécanismes évitent qu’un équipement mal configuré perturbe tout le réseau.
+
+## Checklist rapide
+
+Avant de mettre un switch en production, vérifier :
+
+- management VLAN dédié
+- SSH activé et Telnet désactivé
+- NTP fonctionnel
+- logs envoyés vers un syslog
+- protections STP activées
+- sauvegarde de la configuration
+
+Cette checklist permet d’éviter une grande partie des incidents réseau.
 
 ## Conclusion
 
-Une baseline simple permet d’éviter une grande partie des incidents réseau.
+Une baseline réseau n’a pas besoin d’être complexe.
+
+Mais elle doit être **appliquée systématiquement**.
+
+Dans la pratique, ces quelques règles simples permettent de :
+
+- réduire les incidents
+- faciliter le troubleshooting
+- rendre l’infrastructure plus prévisible
+
+Autrement dit : moins de surprises en production.
