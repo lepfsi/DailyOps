@@ -1,6 +1,7 @@
 import SectionHero from "@/components/SectionHero";
 import Link from "next/link";
 import ArticleCard from "@/components/ArticleCard";
+import { getPostsByCategory } from "@/lib/content";
 
 export const metadata = {
   title: "Networking | DailyOps.Tech",
@@ -20,6 +21,11 @@ const TAGS = [
 ] as const;
 
 export default function NetworkingPage() {
+  const posts = getPostsByCategory("networking");
+
+  const featuredPost = posts[0];
+  const latestPosts = posts.slice(1);
+
   return (
     <div className="space-y-14">
       {/* HERO */}
@@ -40,7 +46,7 @@ export default function NetworkingPage() {
           <div>
             <h2 className="text-2xl font-bold text-white">Start here</h2>
             <p className="mt-2 text-gray-400">
-              Trois baselines incontournables pour stabiliser un réseau en prod.
+              Les premiers contenus incontournables pour stabiliser un réseau en production.
             </p>
           </div>
 
@@ -52,33 +58,37 @@ export default function NetworkingPage() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <ArticleCard
-            variant="featured"
-            title="Production-Ready Switch Baseline — The Non-Negotiables"
-            category="Baseline"
-            href="#"
-            excerpt="Management plane, STP hygiene, trunks, AAA, logging, NTP, SNMP, backups."
-            readTime="8 min"
-            date="Recent"
-          />
-          <ArticleCard
-            title="Routing Stability Checklist — Prevent Flaps Before They Start"
-            category="Routing"
-            href="#"
-            excerpt="Timers, adjacency, ECMP, route filtering, convergence expectations, monitoring signals."
-            readTime="7 min"
-            date="Recent"
-          />
-          <ArticleCard
-            title="VPN Baseline — IPSec That Survives Real Life"
-            category="VPN"
-            href="#"
-            excerpt="Proposals, IDs, NAT-T, MTU, DPD, logs, captures, and operational runbooks."
-            readTime="6 min"
-            date="Recent"
-          />
-        </div>
+        {posts.length === 0 ? (
+          <div className="rounded-2xl border border-[#1b2a60] bg-[#0A1128]/30 p-6 text-gray-400">
+            Aucun article Networking publié pour le moment.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {featuredPost && (
+              <ArticleCard
+                variant="featured"
+                title={featuredPost.title}
+                category={featuredPost.category}
+                href={`/networking/${featuredPost.slug}`}
+                excerpt={featuredPost.excerpt}
+                date={featuredPost.date}
+                readTime="8 min"
+              />
+            )}
+
+            {latestPosts.slice(0, 2).map((post) => (
+              <ArticleCard
+                key={post.slug}
+                title={post.title}
+                category={post.category}
+                href={`/networking/${post.slug}`}
+                excerpt={post.excerpt}
+                date={post.date}
+                readTime="6 min"
+              />
+            ))}
+          </div>
+        )}
       </section>
 
       {/* TAG FILTERS (UI only for now) */}
@@ -112,40 +122,25 @@ export default function NetworkingPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <ArticleCard
-            title="VLAN Design Patterns — Where People Break Production"
-            category="Switching"
-            href="#"
-            excerpt="Trunks, allowed VLANs, native VLAN, tagging strategy, and how to avoid surprises."
-            readTime="6 min"
-            date="Recent"
-          />
-          <ArticleCard
-            title="OSPF Neighborship Failures — A Field Checklist"
-            category="OSPF"
-            href="#"
-            excerpt="Area mismatch, MTU, timers, auth, passive interfaces, and verification steps."
-            readTime="5 min"
-            date="Recent"
-          />
-          <ArticleCard
-            title="BGP Hygiene — Filters, Max-Prefix and Safe Defaults"
-            category="BGP"
-            href="#"
-            excerpt="Prefix-lists, route-maps, max-prefix, communities, and guardrails that save you."
-            readTime="7 min"
-            date="Recent"
-          />
-          <ArticleCard
-            title="Network Monitoring That Actually Detects User Pain"
-            category="Monitoring"
-            href="#"
-            excerpt="Stop monitoring uptime only. Measure latency, loss, jitter, and real user symptoms."
-            readTime="6 min"
-            date="Recent"
-          />
-        </div>
+        {posts.length === 0 ? (
+          <div className="rounded-2xl border border-[#1b2a60] bg-[#0A1128]/30 p-6 text-gray-400">
+            Aucun article Networking à afficher pour le moment.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {posts.map((post) => (
+              <ArticleCard
+                key={post.slug}
+                title={post.title}
+                category={post.category}
+                href={`/networking/${post.slug}`}
+                excerpt={post.excerpt}
+                date={post.date}
+                readTime="6 min"
+              />
+            ))}
+          </div>
+        )}
 
         <div className="flex justify-end">
           <Link

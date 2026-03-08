@@ -109,7 +109,7 @@ export default function Footer() {
                 x
               </a>
                <a
-                href="#"
+                href="https://x.com/DailyOpsTechs"
                 className="inline-flex items-center justify-center w-10 h-10 rounded-xl border border-[#1b2a60] bg-[#0A1128]/40 text-gray-200 hover:border-[#2BD9C5]/60 hover:text-white transition"
                 aria-label="Facebook"
                 title="Facebook"
