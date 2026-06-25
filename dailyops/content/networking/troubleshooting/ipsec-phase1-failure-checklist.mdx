@@ -1,0 +1,54 @@
+---
+title: "IPSec Phase 1 Down — A Field Checklist"
+date: "2026-03-06"
+section: "troubleshooting"
+tags: ["network", "VPN", "IPSec", "incident"]
+description: "IKE params, proposals, ID mismatch, NAT-T, logs, captures."
+readTime: 5
+---
+
+> ⚡ **Key Takeaways**
+>
+> - La Phase 1 IPSec échoue presque toujours pour trois raisons : mismatch de proposals,
+>   ID mismatch, ou problème NAT-T.
+> - Les logs sont suffisants pour diagnostiquer 80 % des cas — la capture n'est nécessaire
+>   que pour le reste.
+> - Un tunnel qui a fonctionné puis tombe brusquement n'a pas le même diagnostic qu'un
+>   tunnel qui n'a jamais monté.
+> - Ne jamais modifier les deux côtés en même temps sans avoir isolé la cause.
+
+## Contexte
+
+**Symptôme :** tunnel IPSec down, aucun trafic ne passe, les utilisateurs ne peuvent
+pas joindre le site distant.
+
+**Format DailyOps :** Contexte → Symptôme → Analyse → Root Cause → Fix → Leçon
+
+Ce cas revient régulièrement en production. La Phase 1 (IKE) est la phase de négociation
+initiale du tunnel : si elle échoue, rien ne fonctionne. La bonne nouvelle : les causes
+sont limitées et systématiquement identifiables.
+
+## Étape 1 : Différencier tunnel jamais monté vs tunnel tombé
+
+La première question à poser : **ce tunnel a-t-il déjà fonctionné ?**
+
+**Tunnel jamais monté** → erreur de configuration dès le départ : proposals, pré-shared
+key, identifiants, NAT.
+
+**Tunnel tombé après avoir fonctionné** → chercher un changement récent : renouvellement
+de certificat, mise à jour firmware, modification de config côté pair, changement d'IP
+publique.
+
+Cette distinction réduit immédiatement le champ de recherche.
+
+## Étape 2 : Lire les logs IKE
+
+C'est le premier réflexe, pas le dernier.
+
+### Sur Cisco IOS / IOS-XE
+
+```bash
+debug crypto isakmp
+debug crypto ipsec
+show crypto isakmp sa
+show crypto ipsec sa

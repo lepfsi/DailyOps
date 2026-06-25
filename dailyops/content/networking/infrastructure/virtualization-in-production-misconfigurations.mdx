@@ -1,0 +1,145 @@
+---
+title: "Virtualization in Production — Common Misconfigurations"
+date: "2026-03-06"
+section: "infrastructure"
+tags: ["virtualisation", "storage", "HA", "performance"]
+description: "Snapshots, storage latency, HA assumptions, backup illusions."
+readTime: 7
+---
+
+> ⚡ **Key Takeaways**
+>
+> - Un snapshot n'est pas une sauvegarde — et l'accumuler dégrade les performances.
+> - Les paramètres HA par défaut ne correspondent presque jamais à la réalité du réseau.
+> - La latence storage est la première cause de lenteur inexpliquée sur les VMs.
+> - Beaucoup d'environnements virtualisés sont en "illusion de résilience" sans le savoir.
+
+## Contexte
+
+La virtualisation a simplifié le déploiement d'infrastructure. Mais cette simplicité a
+un revers : il est devenu très facile de créer des environnements qui *semblent* robustes
+sans l'être vraiment.
+
+Les erreurs décrites ici ne font pas tomber les systèmes immédiatement. Elles s'accumulent,
+dégradent silencieusement les performances, et explosent au pire moment — lors d'un incident,
+d'une mise à jour, ou d'un pic de charge.
+
+## Problème 1 : Snapshots incontrôlés
+
+### Ce qui se passe
+
+Un snapshot capture l'état d'une VM à un instant T. Jusque-là, c'est utile. Le problème
+commence quand les snapshots s'accumulent et ne sont jamais supprimés.
+
+Conséquences concrètes :
+- chaque écriture sur la VM génère une écriture supplémentaire dans le fichier delta
+- les I/O se dégradent progressivement et silencieusement
+- en cas de suppression d'une longue chaîne de snapshots, le "snapshot consolidation"
+  peut bloquer la VM plusieurs minutes, voire heures
+
+  ### Ce qu'il faut faire
+
+  - Politique claire : snapshot de moins de 72 heures pour les opérations courantes
+  - Alerte automatique si un snapshot dépasse 7 jours
+  - Ne jamais utiliser les snapshots comme substitut de sauvegarde
+
+  ### Ce que les gens confondent
+
+  Un snapshot n'est pas une sauvegarde. Si le datastore tombe, le snapshot disparaît
+  avec la VM.
+
+  ## Problème 2 : Latence storage ignorée
+
+  ### Ce qui se passe
+
+  La latence storage est rarement surveillée jusqu'au premier incident sérieux. Pourtant,
+  c'est l'indicateur le plus prédictif de dégradation en environnement virtualisé.
+
+  Seuils à surveiller (valeurs de référence générales) :
+
+  | Type de workload | Latence acceptable |
+  |---|---|
+  | VMs bureau / faible charge | < 20 ms |
+  | Serveurs applicatifs | < 10 ms |
+  | Bases de données | < 5 ms |
+  | VMs critiques temps réel | < 2 ms |
+
+  ### Causes fréquentes
+
+  - SAN ou NAS surchargé (trop de VMs sur le même datastore)
+  - Snapshots accumulés (voir point précédent)
+  - Thin provisioning avec espace disque insuffisant
+  - Réseau storage partagé avec trafic utilisateur
+
+  ### Ce qu'il faut faire
+
+  Surveiller `disk.maxTotalLatency.latest` sur VMware, ou les métriques équivalentes
+  sur Hyper-V / Proxmox. Mettre une alerte dès que la latence dépasse le seuil
+  adapté au workload.
+
+  ## Problème 3 : HA configuré avec les valeurs par défaut
+
+  ### Ce qui se passe
+
+  VMware HA (ou équivalent) active le redémarrage automatique des VMs en cas de panne
+  d'un host. C'est une bonne chose. Mais les valeurs par défaut supposent un réseau et
+  un storage fiables, avec des ressources disponibles.
+
+  Problèmes fréquents en production :
+
+  - **Admission control désactivé** : le cluster accepte plus de VMs qu'il ne peut
+    redémarrer en cas de panne d'un host
+    - **Heartbeat réseau non configuré** : faux positifs qui redémarrent des VMs
+      encore fonctionnelles
+      - **Isolation response mal définie** : une VM isolée du réseau peut être éteinte
+        par HA alors qu'elle tourne encore
+
+        ### Ce qu'il faut faire
+
+        - Activer l'admission control avec un pourcentage de réserve adapté
+          (généralement 25 % pour un cluster à 4 hosts)
+          - Configurer des datastores de heartbeat différents du datastore de production
+          - Tester le comportement HA avant un incident réel — pas pendant
+
+          ## Problème 4 : Overcommit mémoire sans monitoring
+
+          ### Ce qui se passe
+
+          L'overcommit mémoire permet d'allouer plus de RAM virtuelle que la RAM physique
+          disponible sur l'hyperviseur. C'est une fonctionnalité, pas un bug. Mais sans
+          surveillance, elle crée des situations difficiles à diagnostiquer.
+
+          Signes d'overcommit excessif :
+          - swap actif sur les VMs sans raison apparente
+          - ralentissements intermittents inexpliqués
+          - balloon driver actif en permanence sur plusieurs VMs
+
+          ### Ce qu'il faut faire
+
+          - Surveiller le memory balloon et le swap host régulièrement
+          - Définir une règle de ratio max RAM allouée / RAM physique par host (exemple : 1.5:1)
+          - Ne pas confondre RAM allouée et RAM active — les outils VMware Tools permettent
+            de voir la consommation réelle
+
+            ## Checklist rapide
+
+            Avant de considérer un environnement virtualisé comme "production-ready" :
+
+            - [ ] Politique de snapshots définie et appliquée (durée max, alertes)
+            - [ ] Latence storage surveillée avec seuils d'alerte
+            - [ ] HA testé sur un host de test (failover volontaire)
+            - [ ] Admission control activé avec réserve adaptée
+            - [ ] Overcommit mémoire mesuré et dans les limites définies
+            - [ ] Datastores de heartbeat configurés
+            - [ ] Sauvegardes testées indépendamment des snapshots
+
+            ## Conclusion
+
+            La virtualisation est robuste quand elle est bien configurée. Le problème est qu'elle
+            *semble* robuste même quand elle ne l'est pas.
+
+            Les erreurs décrites ici sont communes précisément parce qu'elles n'ont pas de signal
+            d'alerte immédiat. Elles se révèlent lors d'un incident — moment où corriger prend
+            du temps et coûte cher.
+
+            **Un audit de configuration préventif, même léger, évite la majorité de ces situations.**

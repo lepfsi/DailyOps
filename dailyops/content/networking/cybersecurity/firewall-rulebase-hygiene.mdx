@@ -1,0 +1,83 @@
+---
+title: "Firewall Rulebase Hygiene — The Silent Production Killer"
+date: "2026-03-06"
+section: "cybersecurity"
+tags: ["firewall", "hardening", "segmentation"]
+description: "Méthode de nettoyage : objets, shadow rules, naming, review, lifecycle."
+readTime: 6
+---
+
+> ⚡ **Key Takeaways**
+>
+> - Une rulebase non maintenue devient un vecteur de risque, pas une protection.
+> - Les shadow rules et les objets orphelins s'accumulent silencieusement en production.
+> - Un cycle de review régulier réduit la surface d'attaque et le temps de troubleshooting.
+> - Sans naming convention, personne ne sait ce qu'une règle fait — ni pourquoi elle existe.
+
+## Contexte
+
+Dans la majorité des infrastructures, le firewall est configuré une fois… puis oublié.
+
+Au fil du temps, des règles s'accumulent : projets terminés, services migrés, exceptions
+temporaires jamais supprimées. Le résultat est une rulebase opaque, impossible à auditer,
+et qui contient souvent des ouvertures non intentionnelles.
+
+C'est le **"silent production killer"** : le firewall fonctionne, les voyants sont verts,
+mais la politique de sécurité ne correspond plus à la réalité du réseau.
+
+## Les problèmes classiques
+
+### Shadow rules
+
+Une shadow rule est une règle qui ne sera jamais atteinte parce qu'une règle plus haute
+dans la liste la couvre déjà.
+
+Conséquences :
+- fausse impression de sécurité
+- règles restrictives court-circuitées par des règles permissives plus larges
+- impossible à détecter sans outil ou review manuelle
+
+La plupart des firewalls enterprise (Check Point, Palo Alto, Fortinet) ont un outil de
+détection des shadows intégré — il suffit de l'activer.
+
+### Objets orphelins
+
+Un objet orphelin est un objet réseau (host, groupe, service) défini mais non utilisé
+dans aucune règle.
+
+Effets en production :
+- base d'objets ingérable après quelques années
+- risque de réutiliser un objet par erreur
+- confusion lors des audits
+
+### Règles sans propriétaire
+
+La question à poser pour chaque règle : **"Qui est responsable de cette règle,
+et pourquoi existe-t-elle ?"**
+
+Si personne ne peut répondre, la règle est candidate à la suppression ou au désarmement.
+
+### Règles "any/any"
+
+Une règle `source: any / destination: any / action: permit` est un aveu d'échec de
+politique. Elle existe souvent parce qu'un incident a été résolu rapidement sans être
+corrigé ensuite.
+
+Ces règles doivent être identifiées, documentées, et éliminées progressivement.
+
+## Méthode de nettoyage
+
+### 1. Inventaire initial
+
+Avant de toucher quoi que ce soit, exporter la rulebase complète et produire :
+
+- nombre total de règles
+- règles disabled
+- règles sans hit counter depuis 90 jours
+- objets non référencés
+
+La plupart des NGFW fournissent ces données nativement ou via API.
+
+### 2. Naming convention
+
+Chaque règle doit avoir un nom qui répond à trois questions :
