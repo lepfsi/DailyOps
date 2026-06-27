@@ -15,7 +15,7 @@ export default function Header() {
             DailyOps<span className="text-[#2BD9C5]">.Tech</span>
           </span>
           <span className="text-xs text-gray-400">
-            Real-world Ops & Troubleshooting
+            Real-world Operations & Troubleshooting
           </span>
         </Link>
 
