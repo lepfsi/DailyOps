@@ -12,7 +12,6 @@ export default function ThemeToggle() {
     setMounted(true);
   }, []);
 
-  // Évite un flash de rendu incorrect avant l’hydratation
   if (!mounted) return null;
 
   const dark = resolvedTheme === "dark";
@@ -21,16 +20,15 @@ export default function ThemeToggle() {
     <button
       onClick={() => setTheme(dark ? "light" : "dark")}
       className="
-        flex                 /* ← remplace hidden md:flex si tu veux l'afficher aussi sur mobile */
-        md:flex              /* optionnel : garde pour desktop, mais le bouton sera visible tout le temps */
+        hidden md:flex           /* ← RESTAURÉ : caché sur mobile, visible sur desktop */
         items-center
         justify-center
         h-11
         w-11
         rounded-xl
         border
-        border-[#334B8A]     /* ← bordure plus claire (avant : #1b2a60) */
-        bg-[#141f44]         /* ← fond légèrement plus clair que le header (#0A1128) */
+        border-[#334B8A]         /* ← bordure plus claire (au lieu de #1b2a60) */
+        bg-[#141f44]             /* ← fond un peu plus clair que le header */
         text-gray-200
         hover:border-[#2BD9C5]
         transition
