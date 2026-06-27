@@ -1,83 +1,35 @@
 @import "tailwindcss";
 
-/* ===== Variables de thème ===== */
 :root {
-  /* Mode clair (par défaut) */
   --background: #ffffff;
   --foreground: #111827;
-
-  --color-bg-primary: #ffffff;
-  --color-bg-secondary: #f3f4f6;
-  --color-accent: #0ea5e9;
-  --color-text-primary: #111827;
-  --color-text-muted: #4b5563;
-
-  /* Variables pour les articles (mode clair) */
-  --article-text: #374151;
-  --article-heading: #111827;
-  --article-strong: #111827;
-  --article-em: #4b5563;
-  --article-marker: #0ea5e9;
-  --article-blockquote-bg: rgba(0, 0, 0, 0.03);
-  --article-blockquote-border: #0ea5e9;
-  --article-blockquote-text: #374151;
-  --article-code-bg: rgba(0, 0, 0, 0.05);
-  --article-code-border: rgba(0, 0, 0, 0.1);
-  --article-code-text: #1f2937;
-  --article-pre-bg: #f9fafb;
-  --article-pre-border: rgba(0, 0, 0, 0.1);
-  --article-pre-code-text: #111827;
-  --article-table-border: rgba(0, 0, 0, 0.1);
-  --article-th-bg: rgba(0, 0, 0, 0.05);
-  --article-th-text: #111827;
-  --article-td-bg: transparent;
-  --article-td-text: #374151;
-  --article-link: #0ea5e9;
 }
 
 .dark {
-  /* Mode sombre (tes couleurs d'origine) */
   --background: #08101f;
   --foreground: #f8fafc;
-
-  --color-bg-primary: #0A1128;
-  --color-bg-secondary: #111C44;
-  --color-accent: #2BD9C5;
-  --color-text-primary: #ffffff;
-  --color-text-muted: #A0AEC0;
-
-  --article-text: #cbd5e1;
-  --article-heading: #ffffff;
-  --article-strong: #ffffff;
-  --article-em: #e5e7eb;
-  --article-marker: #2bd9c5;
-  --article-blockquote-bg: rgba(17, 28, 68, 0.45);
-  --article-blockquote-border: #2bd9c5;
-  --article-blockquote-text: #e5e7eb;
-  --article-code-bg: rgba(17, 28, 68, 0.8);
-  --article-code-border: rgba(43, 217, 197, 0.12);
-  --article-code-text: #e5e7eb;
-  --article-pre-bg: #08101f;
-  --article-pre-border: rgba(43, 217, 197, 0.14);
-  --article-pre-code-text: #dbeafe;
-  --article-table-border: rgba(43, 217, 197, 0.12);
-  --article-th-bg: rgba(17, 28, 68, 0.6);
-  --article-th-text: #ffffff;
-  --article-td-bg: rgba(10, 17, 40, 0.45);
-  --article-td-text: #cbd5e1;
-  --article-link: #2bd9c5;
 }
 
-/* ===== Application globale ===== */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), sans-serif;
 }
 
-/* ===== Styles des articles (utilisent les variables) ===== */
+:root {
+  --color-bg-primary: #0A1128;
+  --color-bg-secondary: #111C44;
+  --color-accent: #2BD9C5;
+  --color-text-primary: #FFFFFF;
+  --color-text-muted: #A0AEC0;
+}
+
+body {
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-geist-sans), sans-serif;
+}
 .article-content {
-  color: var(--article-text);
+  color: #d1d5db;
   line-height: 1.85;
   font-size: 1.05rem;
 }
@@ -92,9 +44,9 @@ body {
   font-size: 1.9rem;
   line-height: 1.25;
   font-weight: 800;
-  color: var(--article-heading);
+  color: #ffffff;
   letter-spacing: -0.02em;
-  border-bottom: 1px solid rgba(43, 217, 197, 0.18); /* conserve le ton accent même en clair ? */
+  border-bottom: 1px solid rgba(43, 217, 197, 0.18);
   padding-bottom: 0.6rem;
 }
 
@@ -104,28 +56,28 @@ body {
   font-size: 1.35rem;
   line-height: 1.35;
   font-weight: 700;
-  color: var(--article-heading);
+  color: #ffffff;
 }
 
 .article-content p {
-  color: var(--article-text);
+  color: #cbd5e1;
   line-height: 1.9;
 }
 
 .article-content strong {
-  color: var(--article-strong);
+  color: #ffffff;
   font-weight: 700;
 }
 
 .article-content em {
-  color: var(--article-em);
+  color: #e5e7eb;
 }
 
 .article-content ul,
 .article-content ol {
   margin: 1.25rem 0;
   padding-left: 1.5rem;
-  color: var(--article-text);
+  color: #cbd5e1;
 }
 
 .article-content li + li {
@@ -133,15 +85,15 @@ body {
 }
 
 .article-content li::marker {
-  color: var(--article-marker);
+  color: #2bd9c5;
 }
 
 .article-content blockquote {
   margin: 1.75rem 0;
   padding: 1rem 1.25rem;
-  border-left: 3px solid var(--article-blockquote-border);
-  background: var(--article-blockquote-bg);
-  color: var(--article-blockquote-text);
+  border-left: 3px solid #2bd9c5;
+  background: rgba(17, 28, 68, 0.45);
+  color: #e5e7eb;
   border-radius: 0.75rem;
 }
 
@@ -152,7 +104,7 @@ body {
 }
 
 .article-content a {
-  color: var(--article-link);
+  color: #2bd9c5;
   text-decoration: none;
 }
 
@@ -162,9 +114,9 @@ body {
 }
 
 .article-content code {
-  background: var(--article-code-bg);
-  border: 1px solid var(--article-code-border);
-  color: var(--article-code-text);
+  background: rgba(17, 28, 68, 0.8);
+  border: 1px solid rgba(43, 217, 197, 0.12);
+  color: #e5e7eb;
   padding: 0.15rem 0.45rem;
   border-radius: 0.45rem;
   font-size: 0.92em;
@@ -173,18 +125,18 @@ body {
 .article-content pre {
   margin: 1.5rem 0;
   padding: 1.1rem 1.25rem;
-  background: var(--article-pre-bg);
-  border: 1px solid var(--article-pre-border);
+  background: #08101f;
+  border: 1px solid rgba(43, 217, 197, 0.14);
   border-radius: 1rem;
   overflow-x: auto;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
 }
 
 .article-content pre code {
   background: transparent;
   border: 0;
   padding: 0;
-  color: var(--article-pre-code-text);
+  color: #dbeafe;
   font-size: 0.92rem;
   line-height: 1.7;
 }
@@ -195,7 +147,7 @@ body {
   margin: 1.5rem 0;
   overflow: hidden;
   border-radius: 1rem;
-  border: 1px solid var(--article-table-border);
+  border: 1px solid rgba(43, 217, 197, 0.12);
 }
 
 .article-content th,
@@ -206,12 +158,12 @@ body {
 }
 
 .article-content th {
-  background: var(--article-th-bg);
-  color: var(--article-th-text);
+  background: rgba(17, 28, 68, 0.6);
+  color: #ffffff;
   font-weight: 700;
 }
 
 .article-content td {
-  color: var(--article-td-text);
-  background: var(--article-td-bg);
+  color: #cbd5e1;
+  background: rgba(10, 17, 40, 0.45);
 }
