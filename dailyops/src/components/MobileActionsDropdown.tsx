@@ -24,14 +24,28 @@ export default function MobileActionsDropdown() {
     <div className="relative md:hidden" ref={dropdownRef}>
       <button
         onClick={() => setOpen(!open)}
-        className="h-11 w-11 flex items-center justify-center rounded-xl border border-[#334B8A] bg-[#141f44] text-gray-200 hover:border-[#2BD9C5] transition"
+        className="
+          h-11 w-11 flex items-center justify-center rounded-xl border transition
+          /* Mode clair */
+          bg-gray-100 border-gray-300 text-gray-700 hover:border-gray-400
+          /* Mode sombre */
+          dark:bg-[#141f44] dark:border-[#334B8A] dark:text-gray-200 dark:hover:border-[#2BD9C5]
+        "
         aria-label="Plus d’actions"
       >
         <MoreHorizontal size={18} />
       </button>
 
       {open && (
-        <div className="absolute right-0 top-12 w-40 bg-[#0A1128] border border-[#1b2a60] rounded-xl p-2 flex flex-col gap-2 z-50">
+        <div
+          className="
+            absolute right-0 top-12 w-40 rounded-xl border p-2 flex flex-col gap-2 z-50
+            /* Mode clair */
+            bg-white border-gray-200 shadow-lg
+            /* Mode sombre */
+            dark:bg-[#0A1128] dark:border-[#1b2a60]
+          "
+        >
           <LanguageSwitcher compact />
           <ThemeToggle compact />
         </div>

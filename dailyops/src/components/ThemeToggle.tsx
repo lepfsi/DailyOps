@@ -3,7 +3,7 @@
 
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface ThemeToggleProps {
   compact?: boolean;
@@ -11,11 +11,9 @@ interface ThemeToggleProps {
 
 export default function ThemeToggle({ compact = false }: ThemeToggleProps) {
   const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  // Initialise mounted à true uniquement côté client, sans effet
+  const [mounted, setMounted] = useState(() => typeof window !== "undefined");
 
   if (!mounted) return null;
 
@@ -26,7 +24,11 @@ export default function ThemeToggle({ compact = false }: ThemeToggleProps) {
       onClick={() => setTheme(dark ? "light" : "dark")}
       className={`
         ${compact ? "w-full justify-start px-3 py-2 text-sm" : "hidden md:flex items-center justify-center h-11 w-11"}
-        rounded-xl border border-[#334B8A] bg-[#141f44] text-gray-200 hover:border-[#2BD9C5] transition
+        rounded-xl border transition
+        /* Mode clair */
+        bg-gray-100 border-gray-300 text-gray-700 hover:border-gray-400
+        /* Mode sombre */
+        dark:bg-[#141f44] dark:border-[#334B8A] dark:text-gray-200 dark:hover:border-[#2BD9C5]
       `}
       aria-label="Changer le thème"
     >
